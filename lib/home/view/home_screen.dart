@@ -1,41 +1,49 @@
 import 'package:doggos_app_flutter/home/viewmodel/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../breed/view/breed_images_screen.dart';
 
-class ItemList extends StatefulWidget  {
-  const ItemList({super.key});
+class HomeScreen extends StatefulWidget  {
+  const HomeScreen({super.key});
     @override
-  _ItemListState createState() => _ItemListState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _ItemListState extends State<ItemList> {
-  late Future itemsFuture;
+class _HomeScreenState extends State<HomeScreen> {
+  late Future dogsBreeds;
+  late final viewModel; 
 
   @override
   void initState() {
     super.initState();
-    final viewModel = Provider.of<HomeViewModel>(context, listen: false);
-    itemsFuture = viewModel.fetchItems();
+    viewModel = Provider.of<HomeViewModel>(context, listen: false);
+    dogsBreeds = viewModel.fetchDogsBreeds();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final viewModel = Provider.of<HomeViewModel>(context);
-
     return FutureBuilder(
-      future: itemsFuture,
+      future: dogsBreeds,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return const Text('Error');
+          return const Text('Error on fetch dogs breeds!');
         } else {
           return ListView.builder(
           itemCount: viewModel.breeds.length,
           itemBuilder: (context, index) {
             final key = viewModel.breeds.keys.elementAt(index);
-            return ListTile(title: Text(key));
+            return ListTile(
+              title: Text(key),
+              onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/breeds',
+                arguments: key,
+              );
+            },
+            );
           },
         );
         }

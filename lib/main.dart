@@ -1,5 +1,6 @@
+import 'package:doggos_app_flutter/breed/view/breed_images_screen.dart';
 import 'package:doggos_app_flutter/home/viewmodel/home_view_model.dart';
-import '../../api_service.dart';
+import 'core/network/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home/view/home_screen.dart';
@@ -15,11 +16,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HomeViewModel(ApiService('https://dog.ceo/api/breeds/list/all')),
+      create: (context) => HomeViewModel(ApiService('https://dog.ceo/api')),
       child: MaterialApp(
+        routes: {
+          '/breeds': (context) => const BreedImagesScreen(),
+        },
+
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(title: const Text('Doggos App')),
-          body: const ItemList(),
+          body: const HomeScreen(),
         ),
       ),
     );
