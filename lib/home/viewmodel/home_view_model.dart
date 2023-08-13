@@ -18,13 +18,4 @@ class HomeViewModel extends ChangeNotifier {
       // Handle error
     }
   }
-
-  Future<void> fetchImages() async {
-    try {
-      images = await apiService.fetchAllImagesFromBreed("hound");
-      notifyListeners();
-    } catch (e) {
-      // Handle error
-    }
-  }
 }
