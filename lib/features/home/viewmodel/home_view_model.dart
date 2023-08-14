@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/network/api_service.dart';
+import '../../../core/network/api_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   Map<String, dynamic> breeds = {};
