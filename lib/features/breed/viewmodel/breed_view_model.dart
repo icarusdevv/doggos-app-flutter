@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/network/api_service.dart';
+import '../../../core/network/api_service.dart';
 
 class BreedViewModel extends ChangeNotifier {
   List<dynamic> images = [];
